@@ -1,3 +1,23 @@
 spring:
   application:
     name: hrm
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/ens}
+    username: ${DB_USERNAME:ens-user}
+    password: ${DB_PASSWORD:Aa123456@}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:none}
+    show-sql: ${JPA_SHOW_SQL:true}
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: ${DB_SCHEMA:hrm}
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+

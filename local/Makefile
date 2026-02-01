@@ -1,10 +1,20 @@
 DC=docker compose
 
+# database
 DB_COMPOSE=./database/docker-compose.yml
 DB_SQL_PATH=./database
 DB_CONTAINER=postgres
 DB_USER=ens-user
 DB_NAME=ens
+
+#kafka & debezium
+KAFKA_COMPOSE=./kafka-debezium/docker-compose.yml
+
+# kafka & debezium
+kafka-up:
+	$(DC) -f $(KAFKA_COMPOSE) up -d
+kafka-down:
+	${DC} -f $(KAFKA_COMPOSE) down
 
 .PHONY: \
 	db-up \

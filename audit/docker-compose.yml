@@ -1,0 +1,9 @@
+services:
+  audit-service:
+    build: .
+    image: audit-service
+    container_name: audit-service
+    ports:
+      - "8000:8000"
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
