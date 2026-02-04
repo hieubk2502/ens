@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 curl -X POST http://localhost:8083/connectors \
   -H "Content-Type: application/json" \
   -d '{
@@ -18,16 +19,9 @@ curl -X POST http://localhost:8083/connectors \
 
           "publication.autocreate.mode": "all_tables",
 
-          "schema.include.list": "hrm",
+          "schema.include.list": "hrm.*",
 
           "snapshot.mode": "initial"
         }
       }
 '
-
-curl -X GET http://localhost:8083/connectors/debezium-ens-hrm/status
-
-curl -X POST http://localhost:8083/connectors/debezium-ens-hrm/restart
-
-curl -X DELETE localhost:8083/connectors/debezium-ens-hrm
-
