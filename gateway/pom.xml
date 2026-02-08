@@ -8,9 +8,9 @@
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>file</artifactId>
+    <artifactId>gateway</artifactId>
     <version>0.0.1</version>
-    <name>file</name>
+    <name>gateway</name>
     <description>  File service</description>
 
     <properties>

@@ -20,5 +20,11 @@ services:
       - "max_wal_senders=10"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - shared-net
 volumes:
   pgdata:
+
+networks:
+  shared-net:
+    external: true

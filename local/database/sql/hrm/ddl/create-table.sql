@@ -28,3 +28,22 @@ CREATE TABLE IF NOT EXISTS hrm.hrm_organization (
 CREATE INDEX idx_hrm_organization_parent_id ON hrm.hrm_organization(parent_id);
 CREATE INDEX idx_hrm_organization_prev_id   ON hrm.hrm_organization(prev_id);
 
+CREATE TABLE IF NOT EXISTS audit.audit_log (
+                           id BIGSERIAL PRIMARY KEY,
+                           schema_name varchar(100) not null,
+                           table_name varchar(100) not null,
+                           row_id BIGINT NOT NULL,
+
+                           op CHAR(1) NOT NULL, -- c/u/d
+
+                           after_data JSONB,
+
+                           lsn BIGINT NOT NULL,
+                           tx_id BIGINT,
+
+                           event_ts TIMESTAMPTZ,
+
+                           created_at TIMESTAMPTZ DEFAULT now(),
+
+                           UNIQUE (schema_name, table_name, lsn)
+);
