@@ -26,7 +26,10 @@ curl -X POST http://localhost:8083/connectors \
 
           "transforms": "select",
           "transforms.select.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-          "transforms.select.whitelist": "before,after,op,source,ts_ms"
+          "transforms.select.whitelist": "before,after,op,source,ts_ms",
+
+          "topic.creation.default.partitions": "3",
+          "topic.creation.default.replication.factor": "1"
         }
       }
 '
