@@ -1,0 +1,3 @@
+com.ens.common.i18n.I18nAutoConfiguration
+com.ens.common.lock.RedisLockAutoConfiguration
+com.ens.common.redis.RedisAutoConfiguration

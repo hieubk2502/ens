@@ -6,6 +6,8 @@ services:
     container_name: postgres
     ports:
       - "5432:5432"
+    mem_limit: 1g
+    cpus: "1.0"
     environment:
       POSTGRES_DB: ens
       POSTGRES_USER: ens-user

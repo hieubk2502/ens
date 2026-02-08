@@ -11,5 +11,37 @@ spring:
       auto-offset-reset: earliest
       key-deserializer: io.confluent.kafka.serializers.protobuf.KafkaProtobufDeserializer
       value-deserializer: io.confluent.kafka.serializers.protobuf.KafkaProtobufDeserializer
+    listener:
+      concurrency: ${KAFKA_LISTENER_CONCURRENCY:3}
     properties:
       schema.registry.url: ${SCHEMA_REGISTRY_URL:http://schema-registry:8081}
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/ens}
+    username: ${DB_USERNAME:ens-user}
+    password: ${DB_PASSWORD:Aa123456@}
+    driver-class-name: org.postgresql.Driver
+
+audit:
+  batch:
+    max-bytes: ${AUDIT_BATCH_MAX_BYTES:2097152}
+    flush-interval-ms: ${AUDIT_BATCH_FLUSH_INTERVAL_MS:20000}
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/ens}
+    username: ${DB_USERNAME:ens-user}
+    password: ${DB_PASSWORD:Aa123456@}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:none}
+    show-sql: ${JPA_SHOW_SQL:true}
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: ${DB_SCHEMA:audit}
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  jackson:
+    serialization:
+      fail-on-empty-beans: false

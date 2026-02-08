@@ -1,0 +1,24 @@
+services:
+  keycloak:
+    image: keycloak/keycloak:24.0
+    container_name: keycloak
+    ports:
+      - "8080:8080"
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/iam
+      KC_DB_USERNAME: admin_keycloak
+      KC_DB_PASSWORD: admin
+      KEYCLOAK_ADMIN: admin_keycloak
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command:
+      - start-dev
+    networks:
+      - shared-net
+
+volumes:
+  keycloak_pgdata:
+
+networks:
+  shared-net:
+    external: true

@@ -30,13 +30,14 @@ CREATE INDEX idx_hrm_organization_prev_id   ON hrm.hrm_organization(prev_id);
 
 CREATE TABLE IF NOT EXISTS audit.audit_log (
                            id BIGSERIAL PRIMARY KEY,
+                           db_name varchar(100) not null,
                            schema_name varchar(100) not null,
                            table_name varchar(100) not null,
                            row_id BIGINT NOT NULL,
 
                            op CHAR(1) NOT NULL, -- c/u/d
 
-                           after_data JSONB,
+                           data JSONB,
 
                            lsn BIGINT NOT NULL,
                            tx_id BIGINT,
@@ -45,5 +46,5 @@ CREATE TABLE IF NOT EXISTS audit.audit_log (
 
                            created_at TIMESTAMPTZ DEFAULT now(),
 
-                           UNIQUE (schema_name, table_name, lsn)
+                           UNIQUE (db_name, schema_name, table_name, lsn)
 );

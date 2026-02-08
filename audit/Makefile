@@ -7,7 +7,7 @@ audit-up:
 	$(DC) -f $(DB_COMPOSE) up -d
 
 audit-down:
-	$(DC) -f $(DB_COMPOSE) down
+	$(DC) -f $(DB_COMPOSE) down -v
 
 build-jar:
 	./mvnw clean install -DskipTests
