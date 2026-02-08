@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 curl -X POST http://localhost:8083/connectors \
   -H "Content-Type: application/json" \
-  -d '{
+  -d '
+      {
         "name": "debezium-ens-hrm",
         "config": {
           "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
@@ -17,11 +18,15 @@ curl -X POST http://localhost:8083/connectors \
           "plugin.name": "pgoutput",
           "slot.name": "ens_hrm_slot",
 
-          "publication.autocreate.mode": "all_tables",
+          "publication.autocreate.mode": "filtered",
 
-          "schema.include.list": "hrm.*",
+          "table.include.list": "hrm.hrm_organization",
 
-          "snapshot.mode": "initial"
+          "snapshot.mode": "initial",
+
+          "transforms": "select",
+          "transforms.select.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+          "transforms.select.whitelist": "before,after,op,source,ts_ms"
         }
       }
 '
