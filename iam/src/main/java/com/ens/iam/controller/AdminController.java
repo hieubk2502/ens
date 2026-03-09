@@ -6,6 +6,8 @@ import com.ens.iam.dto.admin.CreateUserRequest;
 import com.ens.iam.service.KeycloakAdminService;
 import jakarta.validation.Valid;
 import java.util.Map;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,13 +16,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/iam/admin")
+@RequestMapping("/admin")
+@RequiredArgsConstructor
 public class AdminController {
     private final KeycloakAdminService adminService;
-
-    public AdminController(KeycloakAdminService adminService) {
-        this.adminService = adminService;
-    }
 
     @PostMapping("/clients")
     @ResponseStatus(HttpStatus.CREATED)
