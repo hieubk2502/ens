@@ -8,11 +8,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @Setter
 public class KeycloakProperties {
-    private String baseUrl = "http://localhost:8080";
-    private String realm = "master";
-    private String adminRealm = "master";
-    private String adminClientId = "admin-cli";
-    private String adminUsername = "admin";
-    private String adminPassword = "admin";
-
+    private String baseUrl ;
+    private String realm;
+    private String clientId;
+    private String clientSecret;
+    private String adminRealm;
+    private String adminClientId;
+    private String adminUsername;
+    private String adminPassword;
 }

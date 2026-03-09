@@ -23,7 +23,7 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @PostMapping("/login")
+    @PostMapping("/v1/login")
     @ResponseStatus(HttpStatus.OK)
     public TokenResponse login(@Valid @RequestBody LoginRequest request) {
         return authService.login(request);

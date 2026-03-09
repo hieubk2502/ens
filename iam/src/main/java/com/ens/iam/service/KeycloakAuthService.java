@@ -6,10 +6,13 @@ import com.ens.iam.dto.auth.LoginRequest;
 import com.ens.iam.dto.auth.RefreshRequest;
 import com.ens.iam.dto.auth.TokenResponse;
 import java.util.Map;
+
+import org.keycloak.OAuth2Constants;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestClient;
 
 @Service
@@ -23,12 +26,14 @@ public class KeycloakAuthService {
     }
 
     public TokenResponse login(LoginRequest request) {
-        String realm = request.getRealm() != null ? request.getRealm() : properties.getRealm();
+        String clientId = requireClientId();
+        String realm = properties.getRealm() ;
         MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
-        form.add("grant_type", "password");
-        form.add("client_id", request.getClientId());
-        if (request.getClientSecret() != null) {
-            form.add("client_secret", request.getClientSecret());
+
+        form.add(OAuth2Constants.GRANT_TYPE, OAuth2Constants.PASSWORD);
+        form.add(OAuth2Constants.CLIENT_ID, clientId);
+        if (StringUtils.hasText(properties.getClientSecret())) {
+            form.add("client_secret", properties.getClientSecret());
         }
         form.add("username", request.getUsername());
         form.add("password", request.getPassword());
@@ -42,12 +47,13 @@ public class KeycloakAuthService {
     }
 
     public TokenResponse refresh(RefreshRequest request) {
+        String clientId = requireClientId();
         String realm = request.getRealm() != null ? request.getRealm() : properties.getRealm();
         MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
         form.add("grant_type", "refresh_token");
-        form.add("client_id", request.getClientId());
-        if (request.getClientSecret() != null) {
-            form.add("client_secret", request.getClientSecret());
+        form.add("client_id", clientId);
+        if (StringUtils.hasText(properties.getClientSecret())) {
+            form.add("client_secret", properties.getClientSecret());
         }
         form.add("refresh_token", request.getRefreshToken());
 
@@ -60,11 +66,12 @@ public class KeycloakAuthService {
     }
 
     public Map<String, Object> introspect(IntrospectRequest request) {
+        String clientId = requireClientId();
         String realm = request.getRealm() != null ? request.getRealm() : properties.getRealm();
         MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
-        form.add("client_id", request.getClientId());
-        if (request.getClientSecret() != null) {
-            form.add("client_secret", request.getClientSecret());
+        form.add("client_id", clientId);
+        if (StringUtils.hasText(properties.getClientSecret())) {
+            form.add("client_secret", properties.getClientSecret());
         }
         form.add("token", request.getToken());
 
@@ -74,5 +81,12 @@ public class KeycloakAuthService {
                 .body(form)
                 .retrieve()
                 .body(Map.class);
+    }
+
+    private String requireClientId() {
+        if (!StringUtils.hasText(properties.getClientId())) {
+            throw new IllegalStateException("Missing configuration: keycloak.client-id");
+        }
+        return properties.getClientId();
     }
 }
