@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: collector
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:kafka:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.protobuf.KafkaProtobufSerializer
+    properties:
+      schema.registry.url: ${SCHEMA_REGISTRY_URL:http://schema-registry:8081}
+
+collector:
+  kafka:
+    topic: ${COLLECTOR_KAFKA_TOPIC:ens.collector.raw}
+    activity-topic: ${COLLECTOR_ACTIVITY_TOPIC:ens.collector.activity.daily}
+    marketing-topic: ${COLLECTOR_MARKETING_TOPIC:ens.collector.marketing.viewtime}
