@@ -16,4 +16,6 @@ public class KeycloakProperties {
 
     private String clientSecret;
 
+    private String url;
+
 }

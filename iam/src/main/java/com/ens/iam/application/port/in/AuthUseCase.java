@@ -1,7 +1,7 @@
 package com.ens.iam.application.port.in;
 
 import com.ens.iam.application.port.in.command.IntrospectTokenCommand;
-import com.ens.iam.application.port.in.command.LoginCommand;
+import com.ens.iam.application.port.in.command.authentication.LoginCommand;
 import com.ens.iam.application.port.in.command.RefreshTokenCommand;
 import com.ens.iam.application.port.in.result.TokenResult;
 import java.util.Map;

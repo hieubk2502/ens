@@ -32,3 +32,4 @@ config:
     realm: ${KEYCLOAK_REALM:master}
     client-id: ${KEYCLOAK_CLIENT_ID:ENS}
     client-secret: ${KEYCLOAK_CLIENT_SECRET:3V67RYc9ruy54OcHewRFQ2o0BJQ2teHw}
+    url: ${KEYCLOAK_URL:/realms/{realm}/protocol/openid-connect/token}
