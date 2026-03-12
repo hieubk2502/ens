@@ -2,6 +2,8 @@ package com.ens.iam.adapter.outbound.infrastructure.keycloak;
 
 import com.ens.iam.adapter.outbound.infrastructure.keycloak.config.KeycloakProperties;
 import com.ens.iam.adapter.outbound.infrastructure.keycloak.dto.KeycloakTokenResponse;
+import com.ens.iam.adapter.outbound.infrastructure.persistence.entity.ClientEntity;
+import com.ens.iam.adapter.outbound.infrastructure.persistence.repository.ClientJpaRepository;
 import com.ens.iam.application.port.in.command.IntrospectTokenCommand;
 import com.ens.iam.application.port.in.command.RefreshTokenCommand;
 import com.ens.iam.application.port.in.result.TokenResult;
@@ -26,6 +28,7 @@ import org.springframework.web.client.RestClient;
 public class KeycloakIdentityProviderAuthAdapter implements IdentityProviderAuthPort {
     private final RestClient restClient;
     private final KeycloakProperties properties;
+    private final ClientJpaRepository clientJpaRepository;
 
     @Override
     public TokenResult login(AuthLogin request) {
@@ -35,10 +38,13 @@ public class KeycloakIdentityProviderAuthAdapter implements IdentityProviderAuth
         String password = request.password();
         String clientId = request.clientId();
 
+       ClientEntity client =  clientJpaRepository.findByClientId(clientId)
+               .orElseThrow(() -> new RuntimeException());
+
         MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
         form.add(OAuth2Constants.GRANT_TYPE, OAuth2Constants.PASSWORD);
         form.add(OAuth2Constants.CLIENT_ID, clientId);
-        form.add(OAuth2Constants.CLIENT_SECRET, properties.getClientSecret());
+        form.add(OAuth2Constants.CLIENT_SECRET, client.getSecret());
         form.add(OAuth2Constants.USERNAME, username);
         form.add(OAuth2Constants.PASSWORD, password);
 

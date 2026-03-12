@@ -5,6 +5,7 @@ import com.ens.iam.adapter.inbound.rest.mapper.AuthenticationRestMapper;
 import com.ens.iam.application.port.in.AuthUseCase;
 import com.ens.iam.application.port.in.result.TokenResult;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,14 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthUseCase authUseCase;
     private final AuthenticationRestMapper authenticationRestMapper;
-
-    public AuthenticationController(AuthUseCase authUseCase, AuthenticationRestMapper authenticationRestMapper) {
-        this.authUseCase = authUseCase;
-        this.authenticationRestMapper = authenticationRestMapper;
-    }
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
