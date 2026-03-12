@@ -23,6 +23,7 @@
         <module>noti</module>
         <module>gateway</module>
         <module>audit</module>
+		<module>collector</module>
     </modules>
 
 	<properties>

@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package collector.events;
+
+option java_package = "com.ens.collector.collector.proto";
+option java_multiple_files = true;
+
+message DailyUserActivityRequest {
+  string user_id = 1;
+  string date = 2;
+  int64 total_seconds = 3;
+  int64 activity_count = 4;
+}
+
+message MarketingViewTimeRequest {
+  string user_id = 1;
+  string marketing_id = 2;
+  string date = 3;
+  int64 view_seconds = 4;
+}
