@@ -34,11 +34,19 @@
 ## Packages và tác dụng
 Dependencies:
 - `vue`: core framework xây dựng UI theo component.
+- `vue-router`: định tuyến SPA.
+- `pinia`: state management.
+- `axios`: client HTTP.
+- `ant-design-vue`: bộ UI component.
+- `dayjs`: xử lý thời gian nhẹ gọn.
 
 DevDependencies:
 - `vite`: công cụ build/bundler, cung cấp dev server HMR.
 - `@vitejs/plugin-vue`: plugin giúp Vite biên dịch file `.vue`.
 - `vite-plugin-vue-devtools`: tích hợp Vue Devtools khi phát triển.
+- `typescript`, `vue-tsc`: hỗ trợ TypeScript.
+- `vitest`, `@vue/test-utils`, `jsdom`: unit test.
+- `eslint`, `eslint-plugin-vue`, `@typescript-eslint/*`: linting.
 
 ## Quy trình phát triển gợi ý
 1. Chạy `npm install`.
