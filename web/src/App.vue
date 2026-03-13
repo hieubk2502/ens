@@ -1,66 +1,22 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { computed } from 'vue'
+import { RouterView, useRoute } from 'vue-router'
+import DefaultLayout from './layouts/DefaultLayout.vue'
+
+const route = useRoute()
+const layoutComponent = computed(() => {
+  switch (route.meta.layout) {
+    case 'none':
+      return null
+    default:
+      return DefaultLayout
+  }
+})
 </script>
 
 <template>
-  <div class="app-shell">
-    <header class="nav">
-      <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="42" height="42" />
-      <nav>
-        <RouterLink to="/">Trang chủ</RouterLink>
-        <RouterLink to="/dashboard">Dashboard</RouterLink>
-      </nav>
-    </header>
-
-    <main class="content">
-      <RouterView />
-    </main>
-  </div>
+  <component v-if="layoutComponent" :is="layoutComponent">
+    <RouterView />
+  </component>
+  <RouterView v-else />
 </template>
-
-<style scoped>
-.app-shell {
-  min-height: 100vh;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  gap: 1.5rem;
-}
-
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  justify-content: space-between;
-  padding: 0.75rem 1rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  background: #f8fafc;
-}
-
-nav {
-  display: flex;
-  gap: 1rem;
-}
-
-nav a {
-  text-decoration: none;
-  color: #0f172a;
-  font-weight: 600;
-  padding: 0.35rem 0.65rem;
-  border-radius: 8px;
-  transition: background-color 120ms ease, color 120ms ease;
-}
-
-nav a.router-link-active {
-  background: #16a34a;
-  color: #fff;
-}
-
-.content {
-  padding: 0 0.5rem;
-}
-
-.logo {
-  display: block;
-}
-</style>
