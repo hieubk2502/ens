@@ -1,22 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { RouterView, useRoute } from 'vue-router'
-import DefaultLayout from './layouts/DefaultLayout.vue'
-
-const route = useRoute()
-const layoutComponent = computed(() => {
-  switch (route.meta.layout) {
-    case 'none':
-      return null
-    default:
-      return DefaultLayout
-  }
-})
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <component v-if="layoutComponent" :is="layoutComponent">
+  <div id="app">
     <RouterView />
-  </component>
-  <RouterView v-else />
+  </div>
 </template>
