@@ -1,0 +1,11 @@
+server:
+  port: 8061
+spring:
+  application:
+    name: media-pipeline
+
+minio:
+  url: ${MINIO_URL:https://dev-minio-oneauto.tasco.com.vn}
+  access-key: ${MINIO_ACCESS_KEY:GnCcoYiW1AIc747fatY1}
+  secret-key: ${MINIO_SECRET_KEY:U0Oq85162QrANZatX0AM1AXydcrVpBoLr1QJxHul}
+  bucket: ${FILE_BUCKET:bucket-hieu-test)

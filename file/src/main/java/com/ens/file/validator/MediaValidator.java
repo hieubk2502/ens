@@ -1,9 +1,11 @@
 package com.ens.file.validator;
 
 import org.apache.tika.Tika;
+import org.apache.tika.mime.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Set;
@@ -44,8 +46,9 @@ public class MediaValidator {
         }
 
 
-        try(InputStream inputStream = file.getInputStream()) {
+        try(BufferedInputStream inputStream = new BufferedInputStream(file.getInputStream())) {
 
+            inputStream.mark(1024);
             // Layer 3: check magic number
             // Valid magic number is valid signature header at head file
             // Every files ( mp4, png, pdf...) will have signature byte at head file
@@ -57,11 +60,12 @@ public class MediaValidator {
                 throw new RuntimeException("Invalid video file ( fake file)");
             }
 
+            inputStream.reset();
+
             // Layer 4.  Check MINE using TIKA
             // check contentType thật từ file
             // tika will read all file => dêtect contentType real.
             String mine = new Tika().detect(inputStream);
-
             if (!mine.startsWith("video/")) {
                 throw new RuntimeException("Not a video");
             }

@@ -1,13 +1,13 @@
-package com.ens.stream;
+package com.ems.mediapipline;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class StreamApplicationTests {
+class MediaPiplineApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }

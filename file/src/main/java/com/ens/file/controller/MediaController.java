@@ -22,12 +22,17 @@ import java.io.IOException;
 public class MediaController {
     MediaService mediaService;
 
-    @PostMapping("/upload")
-    public ResponseEntity<MediaUploadSdo> upload(@RequestParam MultipartFile file) throws MinioException, IOException {
-        MediaUploadSdo result = mediaService.upload(file);
+    @PostMapping("/upload/v1")
+    public ResponseEntity<MediaUploadSdo> uploadV1(@RequestParam MultipartFile file) throws MinioException, IOException {
+        MediaUploadSdo result = mediaService.uploadV1(file);
 
         return ResponseEntity.ok(result);
     }
+    @PostMapping("/upload/v2")
+    public ResponseEntity<MediaUploadSdo> uploadV2(@RequestParam MultipartFile file) throws MinioException, IOException {
+        MediaUploadSdo result = mediaService.uploadV2(file);
 
+        return ResponseEntity.ok(result);
+    }
 
 }

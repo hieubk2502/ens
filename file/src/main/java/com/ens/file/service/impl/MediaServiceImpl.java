@@ -21,13 +21,13 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MediaServiceImpl implements MediaService {
 
-    @Value("minio.bucket")
-    String minioBucket;
+//    @Value("${minio.bucket}")
+//    String minioBucket;
 
     MinioClient minioClient;
 
     @Override
-    public MediaUploadSdo upload(MultipartFile file) throws IOException, MinioException {
+    public MediaUploadSdo uploadV1(MultipartFile file) throws IOException, MinioException {
 
         MediaValidator.validate(file);
 
@@ -37,7 +37,8 @@ public class MediaServiceImpl implements MediaService {
         String contentType = file.getContentType();
 
         var object = PutObjectArgs.builder()
-                .bucket(minioBucket)
+//                .bucket(minioBucket)
+                .bucket("bucket-hieu-test")
                 .object("raw/" + mediaId + extension)
                 .contentType(contentType)
                 // minio will auto parse video to multipart and upload to minio server
@@ -47,5 +48,10 @@ public class MediaServiceImpl implements MediaService {
         minioClient.putObject(object);
 
         return MediaUploadSdo.builder().mediaId(mediaId).build();
+    }
+
+    @Override
+    public MediaUploadSdo uploadV2(MultipartFile file) throws IOException, MinioException {
+        return null;
     }
 }

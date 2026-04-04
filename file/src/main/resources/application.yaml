@@ -1,6 +1,13 @@
+server:
+  port: 8060
 spring:
   application:
     name: file
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+  context: /
   main:
     allow-bean-definition-overriding: true
   datasource:
