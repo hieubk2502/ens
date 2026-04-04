@@ -1,7 +1,5 @@
 package com.ens.collector.service;
 
-import com.ens.collector.collector.proto.DailyUserActivityRequest;
-import com.ens.collector.collector.proto.MarketingViewTimeRequest;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
 import lombok.RequiredArgsConstructor;
