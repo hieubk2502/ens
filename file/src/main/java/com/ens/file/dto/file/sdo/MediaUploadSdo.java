@@ -8,5 +8,5 @@ import lombok.*;
 @Getter
 @Setter
 public class MediaUploadSdo {
-    String mediaId ;
+    String mediaId;
 }
