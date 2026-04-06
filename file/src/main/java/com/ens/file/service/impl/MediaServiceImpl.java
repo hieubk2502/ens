@@ -14,32 +14,36 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Random;
 import java.util.UUID;
+import java.util.random.RandomGenerator;
 
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MediaServiceImpl implements MediaService {
 
-//    @Value("${minio.bucket}")
-//    String minioBucket;
+    @Value("${minio.bucket}")
+    private String minioBucket;
 
-    MinioClient minioClient;
+    private final MinioClient minioClient;
 
     @Override
     public MediaUploadSdo uploadV1(MultipartFile file) throws IOException, MinioException {
 
         MediaValidator.validate(file);
 
-        String mediaId = UUID.randomUUID().toString();
+        // save db and set status is temp ( will have job delete file temp every day)
+
+
+        Long fileAttachmentId = Random.from(RandomGenerator.getDefault()).nextLong();
+        String privateKey = UUID.randomUUID().toString();
         String fileName = file.getOriginalFilename();
         String extension = fileName.substring(fileName.lastIndexOf(".")).toLowerCase();
         String contentType = file.getContentType();
 
         var object = PutObjectArgs.builder()
-//                .bucket(minioBucket)
-                .bucket("bucket-hieu-test")
-                .object("raw/" + mediaId + extension)
+                .bucket(minioBucket)
+                .object("media/" + privateKey + "/raw/" + privateKey + extension)
                 .contentType(contentType)
                 // minio will auto parse video to multipart and upload to minio server
                 .stream(file.getInputStream(), file.getSize(), -1L)
@@ -47,7 +51,15 @@ public class MediaServiceImpl implements MediaService {
 
         minioClient.putObject(object);
 
-        return MediaUploadSdo.builder().mediaId(mediaId).build();
+        String publicKey = genPublicKey(privateKey);
+
+        return MediaUploadSdo.builder().publicKey(publicKey).build();
+    }
+
+    private String genPublicKey(String privateKey) {
+
+        // will do later
+        return privateKey;
     }
 
     @Override
