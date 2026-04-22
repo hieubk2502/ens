@@ -1,9 +1,13 @@
-<script setup lang="ts">
-import { RouterView } from 'vue-router'
+<template>
+  <h1>Chào mừng bạn đến với dự án Vue đầu tiên!</h1>
+  <p>Đây là file App.vue - Trái tim của ứng dụng.</p>
+</template>
+
+<script setup>
 </script>
 
-<template>
-  <div id="app">
-    <RouterView />
-  </div>
-</template>
+<style>
+h1 {
+  color: #b9424aff;
+}
+</style>

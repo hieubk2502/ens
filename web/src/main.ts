@@ -1,18 +1,9 @@
-import './assets/main.css'
-import 'ant-design-vue/dist/reset.css'
-
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import Antd from 'ant-design-vue'
-
 import App from './App.vue'
-import router from './router'
+import router from './router' // Nhập file cấu hình router
 
 const app = createApp(App)
-const pinia = createPinia()
 
-app.use(pinia)
-app.use(router)
-app.use(Antd)
+app.use(router) // Bảo Vue biết rằng chúng ta sẽ dùng Router này
 
 app.mount('#app')
